@@ -4,6 +4,6 @@
 - 使用我们介绍的方法，在tweets数据集上构建inverted index; 
 - 实现Boolean Retrieval Model，使用TREC 2014 test topics进行测试； 
 - Boolean Retrieval Model： 
-    Input：a query (like Ron and Weasley) 
-    Output: print the qualified tweets. 
-    支持and, or ,not 
+   + Input：a query (like Ron and Weasley) 
+   + Output: print the qualified tweets. 
+   + 支持and, or ,not 
