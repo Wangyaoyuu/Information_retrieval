@@ -7,3 +7,5 @@
    + Input：a query (like Ron and Weasley) 
    + Output: print the qualified tweets. 
    + 支持and, or ,not 
+## 注意：
+- 对于tweets与queries使用相同的预处理
