@@ -1,4 +1,4 @@
-#Homework1.1：Inverted index and Boolean Retrieval Model
+Homework1.1：Inverted index and Boolean Retrieval Model
 ---
 ## 任务：
 - 使用我们介绍的方法，在tweets数据集上构建inverted index; 
