@@ -60,7 +60,10 @@ def find(str):
     str_num_sorted = sorted(str_num.items(), key=lambda x: x[0])
     query={}
     for i in str_num_sorted:
-        query[i[0]]=math.log(1+i[1], 10)*math.log(Paper_number/Word_frequency[i[0]],10)
+        if(i[0] not in Word_frequency.keys()):
+            query[i[0]]=0
+        else:
+            query[i[0]]=math.log(1+i[1], 10)*math.log(Paper_number/Word_frequency[i[0]],10)
 
     #正规化
     Sum=0
