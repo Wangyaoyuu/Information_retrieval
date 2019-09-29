@@ -2,6 +2,7 @@ import json
 from collections import Counter
 import collections
 import math
+import copy
 
 Index={}          #    总索引
 Paper_number=0    #标记文章总数量
@@ -18,7 +19,7 @@ for i in open('tweets.txt'):
     res = sorted(res.items(), key=lambda x: x[0])
     #print(res)
     indexed={}
-    for i in res():
+    for i in res:
         if(i[0] not in Word_frequency.keys()):
             Word_frequency[i[0]]=0
         Word_frequency[i[0]]=Word_frequency[i[0]]+1
@@ -59,26 +60,35 @@ def find(str):
 
 #计算评分最高的n
 def compute(paper,query,num):
-    q=dict(query)
+
     score_dic={}
     for i in paper.keys():
-        p = dict(paper[i])
+        q = copy.deepcopy(query)
+        p = copy.deepcopy(paper[i])
         score=0
         while len(p) > 0 and len(q) > 0:
-            if (p[0] == q[0]):
-                score += p[0]*q[0]
-                p.remove(p[0])
-                q.remove(q[0])
-            if p[0] < q[0]:
-                p.remove(p[0])
-            if p[0] > q[0]:
-                q.remove(q[0])
+            key1=list(p.keys())[0]
+            key2=list(q.keys())[0]
+            if (key1 == key2):
+                score =score + p[key1]*q[key2]
+                del p[key1]
+                del q[key2]
+                #p.remove(p[key1])
+                #q.remove(q[key2])
+            if key1 < key2:
+                del p[key1]
+            if key1 > key2:
+                del q[key2]
         score_dic[i]=score
 
     score_dic = sorted(score_dic.items(), key=lambda x: x[1],reverse=True)
-    return score_dic[0:num]
+    ans=score_dic[0:num]
+    print(ans)
+    return ans
 
 
 
-query=find('')
+print(Index)
+query=find('some')
+print(query)
 compute(Index,query,num=10)
