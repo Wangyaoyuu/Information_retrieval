@@ -3,6 +3,10 @@ from collections import Counter
 import collections
 import math
 import copy
+import nltk
+from nltk.corpus import stopwords
+import nltk.stem
+import string
 
 Index={}          #    总索引
 Paper_number=0    #标记文章总数量
@@ -12,10 +16,19 @@ for i in open('tweets.txt'):
     Paper_number=Paper_number+1
     index={}      #针对每个tweets单独的索引
     dict = json.loads(i)
-    array_text=(dict['text']).lower().split(" ")
-    array_username=dict['userName'].lower().split(" ")
+
+    lower= (dict['text']).lower()
+    remove = str.maketrans('','',string.punctuation)
+    without_punctuation = lower.translate(remove)
+    tokens = nltk.word_tokenize(without_punctuation)
+    without_stopwords = [w for w in tokens if not w in stopwords.words('english')]
+    s = nltk.stem.SnowballStemmer('english')  # 参数是选择的语言
+    cleaned_text = [s.stem(ws) for ws in without_stopwords]
+
+    '''array_username=dict['userName'].lower().split(" ")
     array=array_text+array_username
-    res = Counter(array)
+    '''
+    res = Counter(cleaned_text)
     res = sorted(res.items(), key=lambda x: x[0])
     #print(res)
     indexed={}
