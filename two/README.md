@@ -1,4 +1,4 @@
-Homework1.2：Ranked retrieval model 
+## Homework1.2：Ranked retrieval model 
 
 （IR.py为简单实现，newIR.py为倒排索引实现）
 ---
