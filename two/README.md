@@ -13,7 +13,7 @@
 ## 过程：
 - 对tweets文档进行预处理（包括split、lower操作）
 - 生成score矩阵（tf，idf依次对统计的词频进行处理）
-## 关于nltk and jieba：
+## 关于nltk and jieba（仅测试不建议使用nltk）：
 - 英文nltk and 中文jieba
 - import nltk
 - 引入nltk运行速度会很慢
