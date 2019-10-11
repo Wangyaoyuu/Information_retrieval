@@ -1,8 +1,6 @@
 ## Homework1.3：IR Evaluation
 ---
 ## 任务：
-- 在Homework1.1的基础上实现最基本的Ranked retrieval model;
-- Use SMART notation: lnc.ltc 
 - 实现以下指标评价，并对HW1.2检索结果进行评价 
    + Mean Average Precision (MAP)
    + Mean Reciprocal Rank (MRR)
