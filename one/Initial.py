@@ -45,9 +45,9 @@ def find(str):
     # A and B and C、A or B or C、(A and B) or C、(A or B) and C
     elif(len(array_str)==5):
         if("(" in array_str[0]):
-            a=array_str[0].strip("(")
-            b=array_str[2].strip(")")
-            c=array_str[4]
+            a=Index[array_str[0].strip("(")]
+            b=Index[array_str[2].strip(")")]
+            c=Index[array_str[4]]
             if(array_str[1]=="and"):
                 d=and_sort(a,b)
                 if(array_str[3]=="and"):
@@ -62,9 +62,9 @@ def find(str):
                     e = or_sort(d, c)
 
         elif(")" in array_str[4]):
-            a = array_str[0]
-            b = array_str[2].strip("(")
-            c = array_str[4].strip(")")
+            a = Index[array_str[0]]
+            b = Index[array_str[2].strip("(")]
+            c = Index[array_str[4].strip(")")]
             if (array_str[3] == "and"):
                 d = and_sort(c, b)
                 if (array_str[1] == "and"):
