@@ -10,3 +10,5 @@
 - result.txt为标准结果，并且已经通过process.py的筛选（筛选掉多余文本的tweetid）
 - qrels.txt为待测试的结果，并且MAP与NDCG的程序框架已有
 - 修改MAP与NDCG的程序框架，得到MRR的评测结果
+## 注：
+- qrels.txt和result.txt文件略大，由于网络问题，无法上传
