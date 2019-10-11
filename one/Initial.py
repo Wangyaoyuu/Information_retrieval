@@ -36,13 +36,14 @@ def find(str):
     array_str=str.split(" ")
     e=[]
 
-    if(len(array_str==3)):
-        if(array[1]=="and"):
+    if(len(array_str)==3):
+        if(array_str[1]=="and"):
             e=And(array[0],array[2])
-        if(array[1]=="or"):
+
+        if(array_str[1]=="or"):
             e=Or(array[0],array[2])
     # A and B and C、A or B or C、(A and B) or C、(A or B) and C
-    elif(len(array_str==5)):
+    elif(len(array_str)==5):
         if("(" in array_str[0]):
             a=array_str[0].strip("(")
             b=array_str[2].strip(")")
@@ -81,9 +82,9 @@ def find(str):
             A = length[array_str[0]]
             B = length[array_str[2]]
             C = length[array_str[4]]
-            a = array_str[0]
-            b = array_str[2]
-            c = array_str[4]
+            a = Index[array_str[0]]
+            b = Index[array_str[2]]
+            c = Index[array_str[4]]
 
             if(array_str[1]=="and"):
                 if(A>=B):
@@ -155,14 +156,12 @@ def and_sort(a, b):
             ret.append(a[0])
             a.remove(a[0])
             b.remove(b[0])
-        if a[0] < b[0]:
+        elif a[0] < b[0]:
             a.remove(a[0])
-        if a[0] > b[0]:
+        elif a[0] > b[0]:
             b.remove(b[0])
     return ret
 
-'''
-f1 = open('Inverted_index.txt','w',encoding='utf-8')
-for i in Index.keys():
-    f1.writelines(str(i)+":"+str(Index[i]))
-'''
+
+answer=find("House and may and kill")
+print(answer)
