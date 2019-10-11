@@ -59,6 +59,7 @@ def MAP_eval(qrels_dict, test_dict, k = 100):
             print('query:', query, ' not found a true value')
             AP_result.append(0)
     return np.mean(AP_result)
+
 def MRR_eval(qrels_dict, test_dict, k = 100):
     MRR_result = []
     for query in qrels_dict:
@@ -80,8 +81,6 @@ def MRR_eval(qrels_dict, test_dict, k = 100):
                 print('query', query, ', MRR: ',MRR )
                 break
     return np.mean(MRR_result)
-
-
 
 def NDCG_eval(qrels_dict, test_dict, k = 100):
     NDCG_result = []
