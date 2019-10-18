@@ -50,4 +50,4 @@ Cluster 1: graphics image henry toronto software images file files gif gov
 
 Cluster 2: com access posting nntp host digex university article net sandvik
 
-Cluster 3: god com people jesus don say morality think sgi article
+Cluster 3: god com people jesus don say morality think sgi article.
