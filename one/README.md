@@ -11,6 +11,29 @@ Homework1.1：Inverted index and Boolean Retrieval Model
 - 对于tweets与queries使用相同的预处理
 ## 过程：
 - 对tweets文档进行预处理（包括split、lower操作）
+
+Index={}
+
+for i in open('tweets.txt'):
+
+    dict = json.loads(i)
+    
+    array_text=(dict['text']).lower().split(" ")
+    
+    array_username=dict['userName'].lower().split(" ")
+    
+    array=array_text+array_username
+    
+    array=list(set(array))
+    
+    for j in range(len(array)):
+    
+        if(array[j] not in Index.keys()):
+        
+            Index[array[j]]=[]
+            
+        Index[array[j]].append(dict["tweetId"])
+        
 - 倒排索引（生成索引的字典，并记录下索引的长度）
 - 查询优化（实现两个word的and、or 和 多个word的and、or优化查询）
 - and操作实现
@@ -66,3 +89,8 @@ def or_sort(a, b):
         ret += a
         
     return ret
+## 输入：
+"House and may and kill"
+## 输出：
+['28965792812892160']
+## 完成度较高
