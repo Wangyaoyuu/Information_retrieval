@@ -46,21 +46,13 @@ logging.basicConfig(level=logging.INFO,format='%(asctime)s %(levelname)s %(messa
 
 op = OptionParser()
 
-op.add_option("--lsa",
-              dest="n_components", type="int",
-              help="Preprocess documents with latent semantic analysis.")
+op.add_option("--lsa",dest="n_components", type="int",help="Preprocess documents with latent semantic analysis.")
 
-op.add_option("--no-minibatch",
-              action="store_false", dest="minibatch", default=True,
-              help="Use ordinary k-means algorithm (in batch mode).")
+op.add_option("--no-minibatch",action="store_false", dest="minibatch", default=True,help="Use ordinary k-means algorithm (in batch mode).")
 
-op.add_option("--no-idf",
-              action="store_false", dest="use_idf", default=True,
-              help="Disable Inverse Document Frequency feature weighting.")
+op.add_option("--no-idf",action="store_false", dest="use_idf", default=True,help="Disable Inverse Document Frequency feature weighting.")
 
-op.add_option("--use-hashing",
-              action="store_true", default=False,
-              help="Use a hashing feature vectorizer")
+op.add_option("--use-hashing",action="store_true", default=False, help="Use a hashing feature vectorizer")
 
 op.add_option("--n-features", type=int, default=10000,
               help="Maximum number of features (dimensions)"
@@ -76,6 +68,7 @@ op.print_help()
 
 
 def is_interactive():
+    
     return not hasattr(sys.modules['__main__'], '__file__')
 
 
@@ -84,7 +77,9 @@ argv = [] if is_interactive() else sys.argv[1:]
 (opts, args) = op.parse_args(argv)
 
 if len(args) > 0:
+    
     op.error("this script takes no arguments.")
+    
     sys.exit(1)
 
 
@@ -118,18 +113,25 @@ print("Extracting features from the training dataset "
 t0 = time()
 
 if opts.use_hashing:
+    
     if opts.use_idf:
+        
         # Perform an IDF normalization on the output of HashingVectorizer
+        
         hasher = HashingVectorizer(n_features=opts.n_features,
                                    stop_words='english', alternate_sign=False,
                                    norm=None, binary=False)
+        
         vectorizer = make_pipeline(hasher, TfidfTransformer())
+    
     else:
+        
         vectorizer = HashingVectorizer(n_features=opts.n_features,
                                        stop_words='english',
                                        alternate_sign=False, norm='l2',
                                        binary=False)
 else:
+    
     vectorizer = TfidfVectorizer(max_df=0.5, max_features=opts.n_features,
                                  min_df=2, stop_words='english',
                                  use_idf=opts.use_idf)
@@ -166,9 +168,11 @@ lsa = make_pipeline(svd, normalizer)
     print()
 
 if opts.minibatch:
+    
     km = MiniBatchKMeans(n_clusters=true_k, init='k-means++', n_init=1,
                          init_size=1000, batch_size=1000, verbose=opts.verbose)
 else:
+    
     km = KMeans(n_clusters=true_k, init='k-means++', max_iter=100, n_init=1,
                 verbose=opts.verbose)
 
@@ -198,12 +202,17 @@ print()
 
 
 if not opts.use_hashing:
+    
     print("Top terms per cluster:")
 
     if opts.n_components:
+        
         original_space_centroids = svd.inverse_transform(km.cluster_centers_)
+        
         order_centroids = original_space_centroids.argsort()[:, ::-1]
+    
     else:
+        
         order_centroids = km.cluster_centers_.argsort()[:, ::-1]
 
     terms = vectorizer.get_feature_names()
