@@ -43,9 +43,7 @@ import numpy as np
 
 
 # Display progress logs on stdout
-logging.basicConfig(level=logging.INFO,
-
-                    format='%(asctime)s %(levelname)s %(message)s')
+logging.basicConfig(level=logging.INFO,format='%(asctime)s %(levelname)s %(message)s')
 
 # parse commandline arguments
 op = OptionParser()
@@ -94,7 +92,6 @@ if len(args) > 0:
     sys.exit(1)
 
 
-# #############################################################################
 # Load some categories from the training set
 categories = [
     'alt.atheism',
@@ -102,8 +99,7 @@ categories = [
     'comp.graphics',
     'sci.space',
 ]
-# Uncomment the following to do the analysis on all the categories
-# categories = None
+# Uncomment the following to do the analysis on all the categories categories = None
 
 print("Loading 20 newsgroups dataset for categories:")
 
@@ -175,8 +171,6 @@ lsa = make_pipeline(svd, normalizer)
 
     print()
 
-
-# #############################################################################
 # Do the actual clustering
 
 if opts.minibatch:
