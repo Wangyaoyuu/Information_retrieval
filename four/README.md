@@ -16,7 +16,7 @@ Homework2：Clustering with sklearn
 - 运行结果：
 
 ## 具体实现代码细节：
-
+### plot_document_clustering （部分代码）
 引入sklearn的库进行具体的实现
 - from sklearn.datasets import fetch_20newsgroups
 - from sklearn.decomposition import TruncatedSVD
@@ -42,10 +42,8 @@ from time import time
 import numpy as np
 
 
-# Display progress logs on stdout
 logging.basicConfig(level=logging.INFO,format='%(asctime)s %(levelname)s %(message)s')
 
-# parse commandline arguments
 op = OptionParser()
 
 op.add_option("--lsa",
@@ -81,8 +79,6 @@ def is_interactive():
     return not hasattr(sys.modules['__main__'], '__file__')
 
 
-# work-around for Jupyter notebook and IPython console
-
 argv = [] if is_interactive() else sys.argv[1:]
 
 (opts, args) = op.parse_args(argv)
@@ -92,14 +88,12 @@ if len(args) > 0:
     sys.exit(1)
 
 
-# Load some categories from the training set
 categories = [
     'alt.atheism',
     'talk.religion.misc',
     'comp.graphics',
     'sci.space',
 ]
-# Uncomment the following to do the analysis on all the categories categories = None
 
 print("Loading 20 newsgroups dataset for categories:")
 
@@ -170,8 +164,6 @@ lsa = make_pipeline(svd, normalizer)
         int(explained_variance * 100)))
 
     print()
-
-# Do the actual clustering
 
 if opts.minibatch:
     km = MiniBatchKMeans(n_clusters=true_k, init='k-means++', n_init=1,
