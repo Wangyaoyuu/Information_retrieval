@@ -36,6 +36,80 @@
 -  lnc.ltc 
 - Document: logarithmic tf (l as first character), no idf and cosine normalization 
 - Query: logarithmic tf (l in leftmost column), idf (t in second column), no normalization 
+## 代码实现具体细节：
+
+- from collections import Counter 
+- import collections 引入collections函数，目前已知的实现统计单词数量时间复杂度最低的函数，减少时间成本
+- import json 引入json函数，实现text文本的分词功能，直接产生一个json形式的字典数组存储于python中
+## 建立倒排索引结构
+Index={}
+
+num=0
+
+length={}
+
+for i in open('tweets.txt'):
+
+    num=num+1
+    
+    dict = json.loads(i)
+    
+    array_text=(dict['text']).lower().split(" ")
+    
+    #array_username=dict['userName'].lower().split(" ")
+    
+    array=array_text#+array_username
+    
+    res = Counter(array)
+    
+    length[dict["tweetId"]]=0
+    
+    for j in res.keys():
+    
+        length[dict["tweetId"]]=+res[j] ** 2
+        
+    for j in res.keys():
+    
+        if(j not in Index.keys()):
+        
+            Index[j]=[]
+            
+        new={"tweetId":dict["tweetId"],"frequency":res[j]}
+        
+        Index[j].append(new)
+        
+#print(Index)
+## 实现search查找函数的具体实现过程
+def search(str):
+
+    score={}
+    
+    text=str.lower().split(" ")
+    
+    text=Counter(array)
+    
+    for i in text.keys():
+    
+        Wtq=math.log(num/len(Index[i]),10)*text[i]
+        
+        for j in Index[i]:
+        
+            if(j["tweetId"] not in score.keys()):
+            
+                score[j["tweetId"]]=0
+                
+            Wtd=math.log(1+j["frequency"], 10)
+            
+            score[j["tweetId"]]=score[j["tweetId"]]+Wtq*Wtd
+            
+    for i in score.keys():
+    
+        score[i]=score[i]/length[i]
+        
+    return score
+    
+print(search("some"))
+
 ## 输入：
 
 "some"
