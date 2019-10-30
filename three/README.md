@@ -13,15 +13,15 @@
 ## 注：
 - qrels.txt和result.txt文件略大，由于网络问题，无法上传
 ## 报告部分：
-MRR(Mean Reciprocal Rank, 平均倒数排名)
+MRR (Mean Reciprocal Rank, 平均倒数排名)
 
 是一个国际上通用的对搜索算法进行评价的机制，即第一个结果匹配，分数为1，第二个匹配分数为0.5，第n个匹配分数为1/n，如果没有匹配的句子分数为0。最终的分数为所有得分之和。
 
-MAP
+MAP（Maximum A Posteriori）
 
 统计学中，MAP为最大后验概率（Maximum a posteriori）的缩写。估计方法根据经验数据获得对难以观察的量的点估计。它与最大似然估计中的 Fisher方法有密切关系，但是它使用了一个增大的优化目标，这种方法将被估计量的先验分布融合到其中。所以最大后验估计可以看作是规则化（regularization）的最大似然估计。
 
-衡量搜索引擎质量指标(DCG -- Discounted Cumulative Gain)
+DCG （Discounted Cumulative Gain)
 
 DCG的英文全称是Discounted cumulative gain，它是一个衡量搜索引擎算法的指标。
 搜索引擎一般采用PI（per item）的方式进行评测，简单地说就是逐条对搜索结果进行分等级的打分。假设我们现在在Google上搜索一个词，然后得到5个结果。我们对这些结果进行3个等级的区分：Good（好）、Fair（一般）、Bad（差），然后赋予他们分值分别为3、2、1，假定通过逐条打分后，得到这5个结果的分值分别为3、2 、1 、3、 2。
@@ -29,6 +29,49 @@ DCG的英文全称是Discounted cumulative gain，它是一个衡量搜索引擎
 1.在搜索结果页面，越相关的结果排在越前面越好
 2.在PI标注时，等级高的结果比等级低的结果好，即Good要比Fair好、Fair要比Bad好。
 
+## 代码实现具体细节：
+
+- 搜索倒数结构的实现
+
+def MRR_eval(qrels_dict, test_dict, k = 100):
+
+    MRR_result = []
+    
+    for query in qrels_dict:
+    
+        test_result = test_dict[query]
+        
+        true_list = set(qrels_dict[query].keys())
+        
+        # print(len(true_list))
+        
+        # length_use = min(k, len(test_result), len(true_list))
+        
+        length_use = min(k, len(test_result))
+        
+        if length_use <= 0:
+        
+            print('query ', query, ' not found test list')
+            
+            return []
+
+        i=0
+        
+        for doc_id in test_result[0: length_use]:
+        
+            i += 1
+            
+            if doc_id in true_list:
+            
+                MRR=1/i
+                
+                MRR_result.append(1/i)
+                
+                print('query', query, ', MRR: ',MRR )
+                
+                break
+                
+    return np.mean(MRR_result)
 ## 结果：
 
 # AP
@@ -43,6 +86,7 @@ query: 178 ,AP: 0.46296296296296297
 query: 179 ,AP: 0.9711632590609263
 query: 180 ,AP: 0.07688990983214608
 query: 181 ,AP: 1.0
+
 query: 182 ,AP: 0.19305019305019305
 query: 183 ,AP: 0.425531914893617
 query: 184 ,AP: 0.5847126267573457
@@ -55,6 +99,7 @@ query: 190 ,AP: 0.9351466010296691
 query: 191 ,AP: 0.7974447915680067
 query: 192 ,AP: 1.0
 query: 193 ,AP: 1.0
+
 query: 194 ,AP: 0.9770716619981326
 query: 195 ,AP: 0.2695417789757412
 query: 196 ,AP: 0.9615384615384616
@@ -79,6 +124,7 @@ query: 214 ,AP: 0.530280317997534
 query: 215 ,AP: 0.30120481927710846
 query: 216 ,AP: 0.4269032815167319
 query: 217 ,AP: 0.625
+
 query: 218 ,AP: 0.30303030303030304
 query: 219 ,AP: 0.25524197520567754
 query: 220 ,AP: 0.6138226621145667
@@ -110,6 +156,7 @@ query 187 , NDCG:  0.8568815395907531
 query 188 , NDCG:  0.834462410887587
 query 189 , NDCG:  0.11401721726142679
 query 190 , NDCG:  0.9087219839232467
+
 query 191 , NDCG:  0.8333343147042753
 query 192 , NDCG:  0.8691210155951211
 query 193 , NDCG:  0.870741244990849
@@ -133,6 +180,7 @@ query 210 , NDCG:  0.9144104200186212
 query 211 , NDCG:  0.046597135518310455
 query 212 , NDCG:  0.8308594376764563
 query 213 , NDCG:  1.0
+
 query 214 , NDCG:  0.6916266592407506
 query 215 , NDCG:  0.5070939854213776
 query 216 , NDCG:  0.7612721037995507
@@ -160,6 +208,7 @@ query 179 , MRR:  1.0
 query 180 , MRR:  0.14285714285714285
 query 181 , MRR:  1.0
 query 182 , MRR:  1.0
+
 query 183 , MRR:  1.0
 query 184 , MRR:  1.0
 query 185 , MRR:  0.3333333333333333
@@ -183,6 +232,7 @@ query 202 , MRR:  1.0
 query 203 , MRR:  1.0
 query 204 , MRR:  0.5
 query 205 , MRR:  1.0
+
 query 206 , MRR:  0.3333333333333333
 query 207 , MRR:  1.0
 query 208 , MRR:  1.0
